@@ -10,7 +10,7 @@ app.use(cookieParser());
 app.set('view engine', 'pug');
 
 app.get('/', function(req, res) {
-  const name = name: req.cookies.username;
+  const name = req.cookies.username;
   if (name) {
     res.render('index', { name }); // ES6 way of saying name: name
   } else {
@@ -27,12 +27,22 @@ app.get('/cards', function(req, res) {
 });
 
 app.get('/hello', function(req, res) {
-  res.render('hello');
+  const name = req.cookies.username;
+  if (name) {
+    res.redirect('/');
+  } else {
+    res.render('hello');
+  }
 });
 
 app.post('/hello', function(req, res) {
   res.cookie('username', req.body.username);
   res.redirect('/');
+});
+
+app.post('/Goodbye', function(req, res) {
+  res.clearCookie('username');
+  res.redirect('/hello');
 });
 
 app.listen(3000, () => {
