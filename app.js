@@ -10,7 +10,12 @@ app.use(cookieParser());
 app.set('view engine', 'pug');
 
 app.get('/', function(req, res) {
-  res.render('index');
+  const name = name: req.cookies.username;
+  if (name) {
+    res.render('index', { name }); // ES6 way of saying name: name
+  } else {
+    res.redirect('/hello');
+  }
 });
 
 app.get('/cards', function(req, res) {
@@ -22,12 +27,12 @@ app.get('/cards', function(req, res) {
 });
 
 app.get('/hello', function(req, res) {
-  res.render('hello', { name: req.cookies.username });
+  res.render('hello');
 });
 
 app.post('/hello', function(req, res) {
   res.cookie('username', req.body.username);
-  res.render('hello', { name: req.body.username });
+  res.redirect('/');
 });
 
 app.listen(3000, () => {
