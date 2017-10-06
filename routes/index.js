@@ -24,7 +24,7 @@ router.post('/hello', function(req, res) {
   res.redirect('/');
 });
 
-router.post('/Goodbye', function(req, res) {
+router.post('/goodbye', function(req, res) {
   res.clearCookie('username');
   res.redirect('/hello');
 });

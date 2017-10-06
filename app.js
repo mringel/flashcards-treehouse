@@ -6,14 +6,15 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cookieParser());
+app.use('/static', express.static('public'));
+
+app.set('view engine', 'pug');
 
 const mainRoutes = require('./routes');
 const cardRoutes = require('./routes/cards');
 
 app.use(mainRoutes);
 app.use('/cards', cardRoutes);
-
-app.set('view engine', 'pug');
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
